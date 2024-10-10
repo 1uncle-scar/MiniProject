@@ -1,5 +1,3 @@
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Main {
@@ -19,7 +17,7 @@ public class Main {
             scanner.nextLine(); // Consume newline
 
             switch (choice) {
-                case 1:
+                case 1 -> {
                     // Admin login
                     System.out.print("Enter admin username: ");
                     String adminUsername = scanner.nextLine();
@@ -33,23 +31,22 @@ public class Main {
                     } else {
                         System.out.println("Invalid username or password. Please try again.");
                     }
-                    break;
+                }
 
-                case 2:
-                    // Staff login (to be implemented)
-                    break;
+                case 2 -> {
+                }
 
-                case 3:
+                case 3 -> {
                     // Exit
                     System.out.println("Exiting...");
                     scanner.close();
                     return;
+                }
 
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-                    break;
+                default -> System.out.println("Invalid choice. Please try again.");
             }
-        }
+            // Staff login (to be implemented)
+                    }
     }
 
     private static void handleAdminActions(Admin admin, Scanner scanner) {
@@ -59,53 +56,57 @@ public class Main {
             System.out.println("2. Remove Student");
             System.out.println("3. Add Staff");
             System.out.println("4. Remove Staff");
-            System.out.println("5. Logout");
+            System.out.println("5. View All Students");
+            System.out.println("6. Logout");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
-
+    
             switch (choice) {
-                case 1:
+                case 1 -> {
                     // Add student
                     System.out.print("Enter student name: ");
                     String studentName = scanner.nextLine();
                     System.out.print("Enter student class: ");
                     String studentClass = scanner.nextLine();
                     admin.addStudent(studentName, studentClass);
-                    break;
-
-                case 2:
+                }
+    
+                case 2 -> {
                     // Remove student
                     System.out.print("Enter student ID to remove: ");
                     int studentId = scanner.nextInt();
                     admin.removeStudent(studentId);
-                    break;
-
-                case 3:
+                }
+    
+                case 3 -> {
                     // Add staff
                     System.out.print("Enter staff name: ");
                     String staffName = scanner.nextLine();
                     System.out.print("Enter staff department: ");
                     String staffDepartment = scanner.nextLine();
                     admin.addStaff(staffName, staffDepartment);
-                    break;
-
-                case 4:
+                }
+    
+                case 4 -> {
                     // Remove staff
                     System.out.print("Enter staff ID to remove: ");
                     int staffId = scanner.nextInt();
                     admin.removeStaff(staffId);
-                    break;
-
-                case 5:
+                }
+    
+                case 5 -> // View all students
+                    admin.viewAllStudents();
+    
+                case 6 -> {
                     // Logout
                     System.out.println("Logging out...");
                     return;
-
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-                    break;
+                }
+    
+                default -> System.out.println("Invalid choice. Please try again.");
             }
         }
     }
+    
 }

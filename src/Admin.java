@@ -4,8 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Admin {
-    private String Admins;
-    private String password;
+    final private String Admins;
+    final private String password;
 
     public Admin(String Admins, String password) {
         this.Admins = Admins;
@@ -22,7 +22,6 @@ public class Admin {
             ResultSet rs = pstmt.executeQuery();
             return rs.next(); // Returns true if admin exists
         } catch (SQLException e) {
-            e.printStackTrace();
             return false;
         }
     }
@@ -37,7 +36,6 @@ public class Admin {
             pstmt.executeUpdate();
             System.out.println("Student added successfully!");
         } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
@@ -50,7 +48,7 @@ public class Admin {
             pstmt.executeUpdate();
             System.out.println("Student removed successfully!");
         } catch (SQLException e) {
-            e.printStackTrace();
+            
         }
     }
 
@@ -64,7 +62,6 @@ public class Admin {
             pstmt.executeUpdate();
             System.out.println("Staff added successfully!");
         } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
@@ -77,7 +74,24 @@ public class Admin {
             pstmt.executeUpdate();
             System.out.println("Staff removed successfully!");
         } catch (SQLException e) {
-            e.printStackTrace();
+        }
+    }
+
+    // View all students
+    public void viewAllStudents() {
+        String sql = "SELECT * FROM Students";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            System.out.println("Students in the system:");
+            while (rs.next()) {
+                int studentId = rs.getInt("student_id");
+                String name = rs.getString("name");
+                String studentClass = rs.getString("class");
+                System.out.println("ID: " + studentId + ", Name: " + name + ", Class: " + studentClass);
+            }
+        } catch (SQLException e) {
         }
     }
 }
